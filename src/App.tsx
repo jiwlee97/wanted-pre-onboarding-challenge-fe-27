@@ -1,5 +1,7 @@
+import { Button } from "@/shared/ui";
+
 function App() {
-  return <div>Todo List</div>;
+  return <Button>Todo List</Button>;
 }
 
 export default App;
