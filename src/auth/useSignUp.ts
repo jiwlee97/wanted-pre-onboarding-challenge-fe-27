@@ -6,11 +6,17 @@ export interface SignUpRequest {
   password: string;
 }
 
+export interface SignUpResponse {
+  message: string;
+  token: string;
+}
+
 export const useSignUp = () => {
-  const signUp = async ({ email, password}: SignUpRequest) => {
-    await axiosInstance.post('/users/create', {
+  const signUp = async ({ email, password}: SignUpRequest): Promise<SignUpResponse> => {
+    const response = await axiosInstance.post('/users/create', {
       email, password
     });
+    return response.data;
   }
 
   return useMutation({

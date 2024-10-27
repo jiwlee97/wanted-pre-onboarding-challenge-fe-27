@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useSignUp } from "./useSignUp";
 import { isAxiosError } from "axios";
 import { useToast } from "@/shared/lib";
+import { useToken } from "./useToken";
 
 const formSchema = z.object({
   email: z
@@ -38,6 +39,7 @@ const SignUpForm = () => {
 
   const { mutate } = useSignUp();
   const { toast } = useToast();
+  const { setToken } = useToken();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(
@@ -48,7 +50,6 @@ const SignUpForm = () => {
       {
         onError(error) {
           if (isAxiosError(error) && error.response?.status === 409) {
-            console.log(error.response?.data);
             form.setError("email", {
               message:
                 error.response?.data.details ?? "이미 존재하는 유저입니다",
@@ -60,7 +61,8 @@ const SignUpForm = () => {
             });
           }
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
+          setToken(data.token);
           toast({
             variant: "success",
             title: "회원가입이 완료되었습니다.",
