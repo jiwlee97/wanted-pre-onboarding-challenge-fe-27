@@ -57,6 +57,8 @@
     "eslint-plugin-storybook": "^0.10.1",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
+    "msw": "^2.5.2",
+    "msw-storybook-addon": "^2.0.3",
     "postcss": "^8.4.47",
     "storybook": "^8.3.6",
     "storybook-addon-remix-react-router": "^3.0.1",

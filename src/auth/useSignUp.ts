@@ -2,7 +2,7 @@ import { axiosInstance } from "@/shared/api";
 import { useToast } from "@/shared/lib";
 import { useMutation } from "@tanstack/react-query";
 
-interface SignUpRequest {
+export interface SignUpRequest {
   email: string;
   password: string;
 }
