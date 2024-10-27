@@ -13,6 +13,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useSignUp } from "./useSignUp";
+import { isAxiosError } from "axios";
+import { useToast } from "@/shared/lib";
 
 const formSchema = z.object({
   email: z
@@ -35,12 +37,37 @@ const SignUpForm = () => {
   });
 
   const { mutate } = useSignUp();
+  const { toast } = useToast();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    mutate({
-      email: values.email,
-      password: values.password,
-    });
+    mutate(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onError(error) {
+          if (isAxiosError(error) && error.response?.status === 409) {
+            console.log(error.response?.data);
+            form.setError("email", {
+              message:
+                error.response?.data.details ?? "이미 존재하는 유저입니다",
+            });
+          } else {
+            toast({
+              variant: "destructive",
+              title: "회원가입에 실패했습니다. 다시 시도해주세요.",
+            });
+          }
+        },
+        onSuccess: () => {
+          toast({
+            variant: "success",
+            title: "회원가입이 완료되었습니다.",
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -66,7 +93,11 @@ const SignUpForm = () => {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription>이메일 형태로 입력해주세요.</FormDescription>
+                  {!form.getFieldState("email").invalid && (
+                    <FormDescription>
+                      이메일 형태로 입력해주세요.
+                    </FormDescription>
+                  )}
                   <FormMessage />
                 </FormItem>
               )}
