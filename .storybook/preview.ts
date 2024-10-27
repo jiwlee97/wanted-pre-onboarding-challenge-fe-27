@@ -2,6 +2,7 @@ import type { Preview } from "@storybook/react";
 import '../src/index.css';
 
 import { withThemeByClassName } from "@storybook/addon-themes";
+import { toastDecorator } from "./decorators";
 
 const preview: Preview = {
   parameters: {
@@ -20,7 +21,7 @@ const preview: Preview = {
           dark: 'dark',
       },
       defaultTheme: 'light',
-  })]
+  }),toastDecorator]
 };
 
 export default preview;
