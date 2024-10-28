@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useLogin } from "../api/useLogin";
 import { isAxiosError } from "axios";
 import { useToast, useToken } from "@/shared/lib";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   email: z
@@ -39,6 +40,7 @@ const LoginForm = () => {
   const { mutate } = useLogin();
   const { toast } = useToast();
   const { setToken } = useToken();
+  const navigate = useNavigate();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(
@@ -65,6 +67,7 @@ const LoginForm = () => {
             variant: "success",
             title: "로그인이 완료되었습니다.",
           });
+          navigate("/todos");
         },
       }
     );
