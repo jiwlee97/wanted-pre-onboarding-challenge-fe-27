@@ -1,7 +1,7 @@
 import { NotFoundErrorPage } from "@/pages/error";
 import { LoginPage } from "@/pages/login";
 import { SignUpPage } from "@/pages/sign-up";
-import { TodosPage } from "@/pages/todos";
+import { SelectTodo, TodosPage } from "@/pages/todos";
 import { AuthPageLayout, CheckAuth, DefaultPageLayout } from "@/shared/ui";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -30,6 +30,16 @@ export const router = createBrowserRouter([
           {
             path: "/todos",
             element: <TodosPage />,
+            children: [
+              {
+                path: "",
+                element: <SelectTodo />,
+              },
+              {
+                path: ":id",
+                element: <div>Todo</div>,
+              },
+            ],
           },
         ],
       },
