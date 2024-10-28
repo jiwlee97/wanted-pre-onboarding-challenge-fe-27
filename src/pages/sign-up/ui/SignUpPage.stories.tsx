@@ -4,8 +4,8 @@ import {
   reactRouterParameters,
   withRouter,
 } from "storybook-addon-remix-react-router";
-import SignUpPage from "./SignUpPage";
-import AuthPageLayout from "./AuthPageLayout";
+import { SignUpPage } from "./SignUpPage";
+import { AuthPageLayout } from "@/shared/ui";
 
 const meta: Meta<typeof SignUpPage> = {
   component: AuthPageLayout,

@@ -12,10 +12,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useSignUp } from "./useSignUp";
+import { useSignUp } from "../api/useSignUp";
 import { isAxiosError } from "axios";
 import { useToast } from "@/shared/lib";
-import { useToken } from "./useToken";
+import { useToken } from "@/shared/lib";
 
 const formSchema = z.object({
   email: z
@@ -28,7 +28,7 @@ const formSchema = z.object({
     .min(8, { message: "8자리 이상이어야합니다." }),
 });
 
-const SignUpForm = () => {
+export const SignUpForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -133,5 +133,3 @@ const SignUpForm = () => {
     </Form>
   );
 };
-
-export default SignUpForm;

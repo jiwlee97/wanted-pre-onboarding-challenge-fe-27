@@ -20,3 +20,4 @@ export {
   ToastClose,
   ToastAction,
 } from './Toast';
+export { AuthPageLayout } from './layouts/AuthPageLayout';

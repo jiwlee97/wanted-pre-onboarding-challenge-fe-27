@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const AuthPageLayout = () => {
+export const AuthPageLayout = () => {
   return (
     <div className="overflow-hidden bg-background h-screen w-screen">
       <div className="container flex relative h-full w-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -22,5 +22,3 @@ const AuthPageLayout = () => {
     </div>
   );
 };
-
-export default AuthPageLayout;

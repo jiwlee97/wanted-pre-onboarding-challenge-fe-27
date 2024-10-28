@@ -1,7 +1,7 @@
+import { SignUpForm } from "./SignUpForm";
 import { Link } from "react-router-dom";
-import SignUpForm from "./SignUpForm";
 
-const SignUpPage = () => {
+export const SignUpPage = () => {
   return (
     <>
       <Link
@@ -19,5 +19,3 @@ const SignUpPage = () => {
     </>
   );
 };
-
-export default SignUpPage;
