@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundErrorPage />,
     children: [
       {
-        path: "/signup",
+        path: "/sign-up",
         element: <SignUpPage />,
       },
     ],
