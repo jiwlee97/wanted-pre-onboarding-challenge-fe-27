@@ -1,8 +1,11 @@
+import { AddTodoForm } from "@/features/addTodo";
 import { NotFoundErrorPage } from "@/pages/error";
 import { LoginPage } from "@/pages/login";
 import { SignUpPage } from "@/pages/sign-up";
 import { SelectTodo, TodosPage } from "@/pages/todos";
 import { AuthPageLayout, CheckAuth, DefaultPageLayout } from "@/shared/ui";
+import { TodoItem } from "@/widgets/todo-item";
+import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -36,8 +39,16 @@ export const router = createBrowserRouter([
                 element: <SelectTodo />,
               },
               {
+                path: "add-todo",
+                element: <AddTodoForm />,
+              },
+              {
                 path: ":id",
-                element: <div>Todo</div>,
+                element: (
+                  <Suspense fallback={<div>Loading...</div>}>
+                    <TodoItem />
+                  </Suspense>
+                ),
               },
             ],
           },
