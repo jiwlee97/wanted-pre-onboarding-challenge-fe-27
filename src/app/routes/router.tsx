@@ -1,3 +1,4 @@
+import { AddTodoForm } from "@/features/addTodo";
 import { NotFoundErrorPage } from "@/pages/error";
 import { LoginPage } from "@/pages/login";
 import { SignUpPage } from "@/pages/sign-up";
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
               {
                 path: "",
                 element: <SelectTodo />,
+              },
+              {
+                path: "add-todo",
+                element: <AddTodoForm />,
               },
               {
                 path: ":id",

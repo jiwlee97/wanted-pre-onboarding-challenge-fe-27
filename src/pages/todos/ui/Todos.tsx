@@ -1,15 +1,20 @@
 import { useTodos } from "@/entities/todo";
 import { Button } from "@/shared/ui";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Todos = () => {
   const { data } = useTodos();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const navigateToAddTodo = () => {
+    navigate("/todos/add-todo");
+  };
 
   return (
     <aside className="-mx-4 lg:w-1/5">
       <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
-        <Button>Add Todo</Button>
+        <Button onClick={navigateToAddTodo}>Add Todo</Button>
         {data.map((todo) => (
           <Link
             key={todo.id}
