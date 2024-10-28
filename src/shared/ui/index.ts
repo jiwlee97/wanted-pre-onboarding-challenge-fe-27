@@ -21,3 +21,5 @@ export {
   ToastAction,
 } from './Toast';
 export { AuthPageLayout } from './layouts/AuthPageLayout';
+export { DefaultPageLayout } from './layouts/DefaultPageLayout';
+export { CheckAuth } from './layouts/CheckAuth';

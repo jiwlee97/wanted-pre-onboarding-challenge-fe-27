@@ -12,10 +12,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useSignUp } from "../api/useSignUp";
+import { useLogin } from "../api/useLogin";
 import { isAxiosError } from "axios";
-import { useToast } from "@/shared/lib";
-import { useToken } from "@/shared/lib";
+import { useToast, useToken } from "@/shared/lib";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
@@ -29,7 +28,7 @@ const formSchema = z.object({
     .min(8, { message: "8자리 이상이어야합니다." }),
 });
 
-export const SignUpForm = () => {
+const LoginForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,7 +37,7 @@ export const SignUpForm = () => {
     },
   });
 
-  const { mutate } = useSignUp();
+  const { mutate } = useLogin();
   const { toast } = useToast();
   const { setToken } = useToken();
   const navigate = useNavigate();
@@ -51,15 +50,14 @@ export const SignUpForm = () => {
       },
       {
         onError(error) {
-          if (isAxiosError(error) && error.response?.status === 409) {
+          if (isAxiosError(error) && error.response?.status === 400) {
             form.setError("email", {
-              message:
-                error.response?.data.details ?? "이미 존재하는 유저입니다",
+              message: "존재하지 않는 유저 입니다.",
             });
           } else {
             toast({
               variant: "destructive",
-              title: "회원가입에 실패했습니다. 다시 시도해주세요.",
+              title: "로그인에 실패했습니다. 다시 시도해주세요.",
             });
           }
         },
@@ -67,7 +65,7 @@ export const SignUpForm = () => {
           setToken(data.token);
           toast({
             variant: "success",
-            title: "회원가입이 완료되었습니다.",
+            title: "로그인이 완료되었습니다.",
           });
           navigate("/todos");
         },
@@ -130,9 +128,11 @@ export const SignUpForm = () => {
               )}
             />
           </div>
-          <Button disabled={!form.formState.isValid}>SignUp</Button>
+          <Button disabled={!form.formState.isValid}>Login</Button>
         </div>
       </form>
     </Form>
   );
 };
+
+export default LoginForm;
