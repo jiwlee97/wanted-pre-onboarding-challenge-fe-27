@@ -23,4 +23,4 @@ export {
 export { AuthPageLayout } from './layouts/AuthPageLayout';
 export { DefaultPageLayout } from './layouts/DefaultPageLayout';
 export { CheckAuth } from './layouts/CheckAuth';
-export { Textarea } from './textarea';
+export { Textarea } from './Textarea';
