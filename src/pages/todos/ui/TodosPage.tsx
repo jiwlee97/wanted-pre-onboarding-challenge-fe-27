@@ -5,15 +5,13 @@ import { Outlet } from "react-router-dom";
 
 export const TodosPage = () => {
   return (
-    <div className="h-full hidden space-y-6 p-10 pb-16 md:block">
+    <div className="h-full space-y-6 p-10 pb-16">
       <div className="h-full flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
         <Suspense fallback={<div>Loading...</div>}>
           <Todos />
         </Suspense>
         <div className="flex-1">
-          <div>
-            <Outlet />
-          </div>
+          <Outlet />
         </div>
       </div>
     </div>

@@ -68,7 +68,7 @@ export const EditTodoForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
         <div className="grid gap-2">
           <div className="grid gap-1">
             <FormField
@@ -109,7 +109,12 @@ export const EditTodoForm = ({
               )}
             />
           </div>
-          <Button disabled={!form.formState.isValid}>Save</Button>
+          <div className="grid grid-cols-2 gap-2">
+            <Button variant="outline" onClick={closeEditMode}>
+              Cancel
+            </Button>
+            <Button disabled={!form.formState.isValid}>Save</Button>
+          </div>
         </div>
       </form>
     </Form>

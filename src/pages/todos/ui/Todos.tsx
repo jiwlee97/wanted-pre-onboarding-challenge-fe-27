@@ -19,10 +19,10 @@ export const Todos = () => {
           <Link
             key={todo.id}
             to={`/todos/${todo.id}`}
-            className={`inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-9 px-4 py-2 hover:bg-transparent hover:underline justify-start ${
+            className={`inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground h-9 px-4 py-2 justify-start ${
               location.pathname === `/todos/${todo.id}`
                 ? "bg-muted hover:bg-muted"
-                : ""
+                : "hover:bg-transparent hover:underline"
             }`}
           >
             {todo.title}
