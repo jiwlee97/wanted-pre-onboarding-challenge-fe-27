@@ -18,7 +18,7 @@ export const useAddTodo = () => {
     onMutate: async (newTodo) => {
       await queryClient.cancelQueries({ queryKey: ['todos'] })
   
-      const previousTodos: Todo | undefined = queryClient.getQueryData(['todos'])
+      const previousTodos: Todo[] | undefined = queryClient.getQueryData(['todos'])
   
       queryClient.setQueryData(['todos'], (old: Todo[]) => [...old, newTodo])
   
