@@ -13,30 +13,38 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useToast } from "@/shared/lib";
-import { useAddTodo } from "../api/useAddTodo";
-import { useNavigate } from "react-router-dom";
+import { useEditTodo } from "../api/useEditTodo";
+import { useParams } from "react-router-dom";
+import { Todo } from "@/entities/todo";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "필수입력값입니다." }),
   content: z.string().min(1, { message: "필수입력값입니다." }),
 });
 
-export const AddTodoForm = () => {
+type Props = Pick<Todo, "title" | "content"> & { closeEditMode: () => void };
+
+export const EditTodoForm = ({
+  title: defaultTitle,
+  content: defaultContent,
+  closeEditMode,
+}: Props) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      content: "",
+      title: defaultTitle,
+      content: defaultContent,
     },
   });
 
-  const { mutate } = useAddTodo();
+  const params = useParams();
+  const { mutate } = useEditTodo();
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     mutate(
       {
+        id: params.id ?? "",
         title: values.title,
         content: values.content,
       },
@@ -44,15 +52,15 @@ export const AddTodoForm = () => {
         onError() {
           toast({
             variant: "destructive",
-            title: "할 일 추가에 실패했습니다. 다시 시도해주세요.",
+            title: "할 일 수정에 실패했습니다. 다시 시도해주세요.",
           });
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
           toast({
             variant: "success",
-            title: "할 일 목록에 추가되었습니다.",
+            title: "할 일이 수정되었습니다.",
           });
-          navigate(`/todos/${data.id}`);
+          closeEditMode();
         },
       }
     );
@@ -60,7 +68,7 @@ export const AddTodoForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="h-full">
         <div className="grid gap-2">
           <div className="grid gap-1">
             <FormField
@@ -101,7 +109,12 @@ export const AddTodoForm = () => {
               )}
             />
           </div>
-          <Button disabled={!form.formState.isValid}>Add</Button>
+          <div className="grid grid-cols-2 gap-2">
+            <Button variant="outline" onClick={closeEditMode}>
+              Cancel
+            </Button>
+            <Button disabled={!form.formState.isValid}>Save</Button>
+          </div>
         </div>
       </form>
     </Form>
