@@ -1,1 +1,1 @@
-export type { UniqueId, ISODateString } from './kernel';
+export type { UniqueId, ISODateString, Timestamp } from './kernel';

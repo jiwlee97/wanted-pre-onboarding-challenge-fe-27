@@ -1,4 +1,4 @@
-import { isISODateString } from "@/shared/lib";
+import { convertToTimestamp, isISODateString } from "@/shared/lib";
 import { TodoDto } from "../api/types";
 import { Todo } from "../model/types";
 
@@ -14,8 +14,8 @@ export const convertToTodo = (todoDto: TodoDto): Todo => {
     title: todoDto.title,
     content: todoDto.content,
     id: todoDto.id,
-    createdAt: createdAt,
-    updatedAt: updatedAt
+    createdAt: convertToTimestamp(createdAt),
+    updatedAt: convertToTimestamp(updatedAt),
   }
   
 }
