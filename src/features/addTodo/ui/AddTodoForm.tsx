@@ -101,7 +101,7 @@ export const AddTodoForm = () => {
               )}
             />
           </div>
-          <Button disabled={!form.formState.isValid}>추가</Button>
+          <Button disabled={!form.formState.isValid}>Add</Button>
         </div>
       </form>
     </Form>
