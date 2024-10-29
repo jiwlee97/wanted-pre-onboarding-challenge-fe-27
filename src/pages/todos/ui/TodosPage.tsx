@@ -10,7 +10,7 @@ export const TodosPage = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <Todos />
         </Suspense>
-        <div className="flex-1 lg:max-w-4xl">
+        <div className="flex-1">
           <div>
             <Outlet />
           </div>
