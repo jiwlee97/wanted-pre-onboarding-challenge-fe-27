@@ -1,7 +1,7 @@
 import { Todo } from "@/entities/todo";
 import { AddTodoRequestDto, AddTodoResponseDto } from "../api/types";
 import { AddTodoRequest } from "../model/types";
-import { isISODateString } from "@/shared/lib";
+import { convertToTimestamp, isISODateString } from "@/shared/lib";
 
 export const convertToAddTodoRequestDto = (addTodoRequest: AddTodoRequest): AddTodoRequestDto => {
   return {
@@ -22,7 +22,7 @@ export const convertToTodo = (addTodoResponseDto: AddTodoResponseDto): Todo => {
     title: addTodoResponseDto.title,
     content: addTodoResponseDto.content,
     id: addTodoResponseDto.id,
-    createdAt: createdAt,
-    updatedAt: updatedAt
+    createdAt: convertToTimestamp(createdAt),
+    updatedAt: convertToTimestamp(updatedAt),
   }
 }

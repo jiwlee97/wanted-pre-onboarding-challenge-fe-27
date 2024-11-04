@@ -12,7 +12,7 @@ export const isISODateString = (date: string): date is ISODateString => {
   return isoDateRegex.test(date);
 }
 
-export const convertToTimestamp = (date: ISODateString) => {
+export const convertToTimestamp = (date: ISODateString): Timestamp => {
   return dayjs(date).valueOf();
 }
 
