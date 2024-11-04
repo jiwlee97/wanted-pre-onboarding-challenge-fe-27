@@ -1,8 +1,10 @@
-import { axiosInstance } from "@/shared/api"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { AddTodoRequest } from "../model/types"
-import { convertToAddTodoRequestDto, convertToTodo } from "../lib/addTodoPort"
-import { Todo } from "@/entities/todo"
+import { axiosInstance } from "@/shared/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { AddTodoRequest } from "../model/types";
+import { convertToAddTodoRequestDto, convertToTodo } from "../lib/addTodoPort";
+import { Todo } from "@/entities/todo";
+import { v4 as uuid } from 'uuid';
+import dayjs from "dayjs";
 
 export const useAddTodo = () => {
   const addTodo = async (request: AddTodoRequest): Promise<Todo> => {
@@ -15,16 +17,24 @@ export const useAddTodo = () => {
 
   return useMutation({
     mutationFn: addTodo,
-    onMutate: async (newTodo) => {
-      await queryClient.cancelQueries({ queryKey: ['todos'] })
+    onMutate: async (addTodoRequest) => {
+      await queryClient.cancelQueries({ queryKey: ['todos'] });
   
-      const previousTodos: Todo[] | undefined = queryClient.getQueryData(['todos'])
+      const previousTodos: Todo[] | undefined = queryClient.getQueryData(['todos']);
+
+      const newTodo: Todo = {
+        title: addTodoRequest.title,
+        content: addTodoRequest.content,
+        id: uuid(),
+        createdAt: +dayjs(),
+        updatedAt: +dayjs(),
+      }
   
-      queryClient.setQueryData(['todos'], (old: Todo[]) => [...old, newTodo])
+      queryClient.setQueryData(['todos'], (old: Todo[]) => [...old, newTodo]);
   
       return { previousTodos }
     },
-    onError: (err, newTodo, context) => {
+    onError: (err, addTodoRequest, context) => {
       queryClient.setQueryData(['todos'], context?.previousTodos)
     },
     onSettled: () => {
