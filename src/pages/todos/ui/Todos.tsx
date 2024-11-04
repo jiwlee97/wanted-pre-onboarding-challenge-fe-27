@@ -14,16 +14,39 @@ import {
   Button,
   Icon,
 } from "@/shared/ui";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const DeleteTodoButton = ({ todoId }: { todoId: Todo["id"] }) => {
+const DeleteTodoButton = ({
+  id,
+  title,
+}: {
+  id: Todo["id"];
+  title: Todo["title"];
+}) => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const { mutate } = useDeleteTodo();
 
+  const [open, setOpen] = useState(false);
+
+  const openDialog = () => {
+    setOpen(true);
+  };
+  const closeDialog = () => {
+    setOpen(false);
+  };
+
+  const handleClickDelete: React.MouseEventHandler<HTMLButtonElement> = (
+    event
+  ) => {
+    event.preventDefault();
+    openDialog();
+  };
+
   const deleteTodo = () => {
-    mutate(todoId, {
+    mutate(id, {
       onError: () => {
         toast({
           variant: "destructive",
@@ -41,26 +64,26 @@ const DeleteTodoButton = ({ todoId }: { todoId: Todo["id"] }) => {
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open}>
       <AlertDialogTrigger asChild>
         <Button
           variant="ghost"
           className="opacity-0 w-3 h-3 p-2 border-none bg-transparent hover:border-none hover:bg-slate-200 group-hover:opacity-100"
+          onClick={handleClickDelete}
         >
           <Icon name="close" size="small" />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </AlertDialogDescription>
+          <AlertDialogTitle>
+            '{title}' 할 일을 삭제하시겠습니까?
+          </AlertDialogTitle>
+          <AlertDialogDescription></AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteTodo}>Delete</AlertDialogAction>
+          <AlertDialogCancel onClick={closeDialog}>취소</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteTodo}>삭제</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -93,7 +116,7 @@ export const Todos = () => {
             >
               <div className="w-full flex justify-between items-center gap-1">
                 {todo.title}
-                <DeleteTodoButton todoId={todo.id} />
+                <DeleteTodoButton id={todo.id} title={todo.title} />
               </div>
             </Link>
           </div>
