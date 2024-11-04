@@ -1,25 +1,15 @@
 import { useTodos } from "@/entities/todo";
-import { Todos } from "./Todos";
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import { AddTodoForm } from "@/features/addTodo";
+import { useAddModeStore } from "@/shared/model";
 
 export const TodosPage = () => {
-  return (
-    <div className="h-full space-y-6 p-10 pb-16">
-      <div className="h-full flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Todos />
-        </Suspense>
-        <div className="flex-1">
-          <Outlet />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const SelectTodo = () => {
   const { data } = useTodos();
+  const addMode = useAddModeStore((state) => state.addMode);
+
+  if (addMode) {
+    return <AddTodoForm />;
+  }
+
   return (
     <div className="text-lg h-9 flex items-center font-semibold tracking-tight">
       {data.length === 0

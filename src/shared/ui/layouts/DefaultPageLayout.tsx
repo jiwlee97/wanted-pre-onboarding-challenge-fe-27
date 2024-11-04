@@ -1,10 +1,13 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "../Button";
 import { useToken } from "@/shared/lib";
+import { useAddModeStore } from "@/shared/model";
 
 const Header = () => {
   const { removeToken } = useToken();
   const navigate = useNavigate();
+
+  const setAddMode = useAddModeStore((state) => state.setAddMode);
 
   const onLogout = () => {
     removeToken();
@@ -16,6 +19,7 @@ const Header = () => {
       <Link
         to="/todos"
         className="text-white text-lg font-semibold hover:text-white"
+        onClick={() => setAddMode(false)}
       >
         TodoList
       </Link>

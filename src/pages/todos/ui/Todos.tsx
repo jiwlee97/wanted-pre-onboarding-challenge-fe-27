@@ -1,4 +1,5 @@
 import { Todo, useTodos } from "@/entities/todo";
+import { useAddModeStore } from "@/shared/model";
 import { useDeleteTodo } from "@/features/deleteTodo";
 import { useToast } from "@/shared/lib";
 import {
@@ -92,18 +93,20 @@ const DeleteTodoButton = ({
 
 export const Todos = () => {
   const { data } = useTodos();
+  const setAddMode = useAddModeStore((state) => state.setAddMode);
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const navigateToAddTodo = () => {
-    navigate("/todos/add-todo");
+  const handleClickAddTodo = () => {
+    setAddMode(true);
+    navigate("/todos");
   };
 
   return (
     <aside className="-mx-4 lg:w-1/5">
       <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
-        <Button onClick={navigateToAddTodo}>Add Todo</Button>
+        <Button onClick={handleClickAddTodo}>Add Todo</Button>
         {data.map((todo) => (
           <div key={todo.id} className="w-full">
             <Link
