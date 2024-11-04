@@ -6,7 +6,8 @@ import { SelectTodo, TodosPage } from "@/pages/todos";
 import { AuthPageLayout, CheckAuth, DefaultPageLayout } from "@/shared/ui";
 import { TodoItem } from "@/widgets/todo-item";
 import { Suspense } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const router = createBrowserRouter([
   {
@@ -45,9 +46,11 @@ export const router = createBrowserRouter([
               {
                 path: ":id",
                 element: (
-                  <Suspense fallback={<div>Loading...</div>}>
-                    <TodoItem />
-                  </Suspense>
+                  <ErrorBoundary fallback={<Navigate to="/todos" />}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <TodoItem />
+                    </Suspense>
+                  </ErrorBoundary>
                 ),
               },
             ],
