@@ -1,13 +1,10 @@
-import { AddTodoForm } from "@/features/addTodo";
 import { NotFoundErrorPage } from "@/pages/error";
 import { LoginPage } from "@/pages/login";
 import { SignUpPage } from "@/pages/sign-up";
-import { SelectTodo, TodosPage } from "@/pages/todos";
+import { TodosPage, TodosPageLayout } from "@/pages/todos";
 import { AuthPageLayout, CheckAuth, DefaultPageLayout } from "@/shared/ui";
-import { TodoItem } from "@/widgets/todo-item";
-import { Suspense } from "react";
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
+import { createBrowserRouter } from "react-router-dom";
+import { TodoItemPage } from "@/pages/todos";
 
 export const router = createBrowserRouter([
   {
@@ -33,25 +30,15 @@ export const router = createBrowserRouter([
         children: [
           {
             path: "/todos",
-            element: <TodosPage />,
+            element: <TodosPageLayout />,
             children: [
               {
                 path: "",
-                element: <SelectTodo />,
-              },
-              {
-                path: "add-todo",
-                element: <AddTodoForm />,
+                element: <TodosPage />,
               },
               {
                 path: ":id",
-                element: (
-                  <ErrorBoundary fallback={<Navigate to="/todos" />}>
-                    <Suspense fallback={<div>Loading...</div>}>
-                      <TodoItem />
-                    </Suspense>
-                  </ErrorBoundary>
-                ),
+                element: <TodoItemPage />,
               },
             ],
           },
