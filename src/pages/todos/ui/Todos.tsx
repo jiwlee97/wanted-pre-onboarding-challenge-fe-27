@@ -17,22 +17,20 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const DeleteTodoButton = ({ todoId }: { todoId: Todo["id"] }) => {
-  const navigate = useNavigate();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const { mutateAsync } = useDeleteTodo();
+  const { mutate } = useDeleteTodo();
 
-  const deleteTodo = async () => {
-    await mutateAsync(todoId, {
+  const deleteTodo = () => {
+    mutate(todoId, {
       onError: () => {
-        console.log("error");
         toast({
           variant: "destructive",
           title: "할 일 삭제에 실패했습니다. 다시 시도해주세요.",
         });
       },
       onSuccess: () => {
-        console.log("success");
         toast({
           variant: "success",
           title: "할 일이 삭제되었습니다.",
