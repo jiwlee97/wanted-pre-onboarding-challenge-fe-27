@@ -21,8 +21,11 @@ yarn
 yarn start
 ```
 
-본 레포지토리를 클론받아 아래 명령어를 통해 실행해주세요.
+본 레포지토리를 클론받아주세요.
+본 레포지토리 root directory에 .env 파일을 만들고
+VITE_BASE_URL env 값을 위 서버 실행주소로 세팅해주세요.
 
+아래 명령어를 통해 실행해주세요.
 ```
 npm install
 npm run dev
